@@ -34,7 +34,7 @@
         <div class="left-menu">
             <ul>
                 <c:forEach items="${allManufacturers}" var="manufacturer">
-                    <li><a href="/goodsbymanufacturer/${manufacturer.name}" >${manufacturer.name}</a></li>
+                    <li><a href="/goodsbymanufacturer/${manufacturer.name}">${manufacturer.name}</a></li>
                 </c:forEach>
             </ul>
         </div>
@@ -42,9 +42,21 @@
             <c:if test="${goods != null}">
                 <c:forEach items="${goods}" var="goods">
                     <div class="goodsdata">
-                        <p>${goods.name}</p>
-                        <img width="100" src="${contextPath}/resources/images/${goods.id}.jpg">
-                        ${goods.price} USD
+                        <table>
+                            <tr>
+                                <td colspan="2">
+                                    <h3>${manufacturer.name} > ${goods.name}</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img width="130" src="${contextPath}/resources/images/${goods.id}.jpg"></td>
+                                <td>${goods.description}</td>
+                            </tr>
+                            <tr>
+                                <td>Price: ${goods.price} USD</td>
+                                <td><a href="" class="button">Buy now!</a></td>
+                            </tr>
+                        </table>
                     </div>
                 </c:forEach>
             </c:if>

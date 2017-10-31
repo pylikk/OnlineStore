@@ -9,6 +9,10 @@ h1,h2,h3 {
     text-align: center;
 }
 
+h3 {
+    font-style: italic;
+}
+
 
 input {
     margin: 10px;
@@ -31,6 +35,7 @@ td {
 
 li {
     text-align: left;
+    margin: 5px;
 }
 
 .container {
@@ -38,6 +43,7 @@ li {
     text-align: center;
     width: 1024px;
     margin: 10px auto;
+    border: 2px solid AntiqueWhite;
 }
 
 .header {
@@ -91,5 +97,7 @@ li {
 .button:hover { background: linear-gradient(#f5ae00, #f59500) #f5ae00; }
 .button:active { background: linear-gradient(#f59500, #f5ae00) #f59500; }
 
-.goodsadd table{
+.goodsdata{
+    text-align: left;
+    margin-left: 250px;
 }
