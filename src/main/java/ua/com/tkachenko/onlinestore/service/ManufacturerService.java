@@ -29,4 +29,8 @@ public class ManufacturerService {
     public Manufacturer findById(long id) {
         return manufacturerDao.findOne(id);
     }
+
+    public void remove (long id) {
+        manufacturerDao.delete(id);
+    }
 }

@@ -60,7 +60,7 @@ CREATE TABLE goods(
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   manufacturer_id INT NOT NULL,
   name VARCHAR(255) NOT NULL,
-  description TEXT(1000) NOT NULL,
+  description VARCHAR(10000) NOT NULL DEFAULT 'description',
   price INT NOT NULL,
   quantity INT NOT NULL,
   FOREIGN KEY (manufacturer_id) REFERENCES manufacturers(id)

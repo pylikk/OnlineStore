@@ -7,47 +7,82 @@
 <html>
 <head>
     <title>Goods</title>
+    <link href="${contextPath}/resources/main.css" rel="stylesheet"/>
 </head>
 <body>
-<h1>Goods & Manufacturers</h1>
 <div class="container">
     <div class="header">
-        <div>
-            <h2><a href="/goods">Goods</a></h2>
+        <div class="goods">
+            <a href="/goods">Goods</a>
         </div>
-        <div>
-            <h2><a href="/orders">Orders</a></h2>
+        <div class="orders">
+            <a href="/orders">Orders</a>
         </div>
     </div>
 
     <div class="main">
         <div class="left-menu">
             <h3 align="center">Manufacturers</h3><br>
-            <c:forEach items="${allManufacturers}" var="manufacturer">
-                <p>${manufacturer.id}. <a href="/goods/${manufacturer.name}">${manufacturer.name}</a>
-                    (${manufacturer.country})</p>
-            </c:forEach>
+            <c:if test="${!empty allManufacturers}">
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Country</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    <c:forEach items="${allManufacturers}" var="manufacturer">
+                        <tr>
+                            <td>${manufacturer.id}</td>
+                            <td><a href="/goods/${manufacturer.name}">${manufacturer.name}</a></td>
+                            <td>${manufacturer.country}</td>
+                            <td><a href="/edit_manufacturer/${manufacturer.id}">edit</a></td>
+                            <td><a href="/remove_manufacturer/${manufacturer.id}">delete</a></td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </c:if>
             <br>
-            <form action="/manufacturer/add" method="post">
-                <label><input type="text" name="name">name</label><br>
-                <label><input type="text" name="country">country</label><br>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <input type="submit" name="save">
-            </form>
+            <a href="/edit_manufacturer" class="button">New Manufacturer</a>
         </div>
         <div class="content">
-            <h3 align="center">Goods</h3><br>
+            <h3 align="center">Goods</h3>
 
             <c:if test="${manuf != null}">
-                <h3>${manuf.name}</h3>
-                <c:forEach items="${listGoods}" var="goods">
-                    <p>${goods.id}. ${goods.name} | ${goods.price} USD</p>
-                </c:forEach>
-                <p></p>
+                <div class="goodsdata">
+                <h3 align="center">${manuf.name}</h3>
+                <table align="center">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+
+                    <c:forEach items="${listGoods}" var="goods">
+                        <tr>
+                            <td>${goods.id}</td>
+                            <td>${goods.name}</td>
+                            <td>${goods.price}</td>
+                            <td>${goods.quantity}</td>
+                            <td><a href="/edit_goods/${goods.id}">edit</a></td>
+                            <td><a href="/remove_goods/${goods.id}">delete</a></td>
+                        </tr>
+                    </c:forEach>
+                </table>
+                <br>
+
+                </div>
             </c:if>
+            <a href="/edit_goods" class="button">New Goods</a>
         </div>
     </div>
-
+    <div class="footer">
+        <p>&copy; All rights reserved 2017</p>
+    </div>
 </div>
 </body>
 </html>
