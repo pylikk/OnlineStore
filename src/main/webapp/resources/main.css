@@ -29,6 +29,10 @@ td {
     padding: 5px;
 }
 
+li {
+    text-align: left;
+}
+
 .container {
     background: Seashell;
     text-align: center;
@@ -36,10 +40,17 @@ td {
     margin: 10px auto;
 }
 
-.header, .footer {
+.header {
     min-height: 80px;
     width: 100%;
     padding: 0;
+    background: BlanchedAlmond;
+}
+
+.footer {
+    min-height: 80px;
+    width: 100%;
+    margin: 20px;
     background: BlanchedAlmond;
 }
 

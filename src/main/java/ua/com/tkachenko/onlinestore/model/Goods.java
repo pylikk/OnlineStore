@@ -1,6 +1,7 @@
 package ua.com.tkachenko.onlinestore.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "goods")
@@ -26,6 +27,17 @@ public class Goods {
 
     @Column(name = "quantity")
     private int quantity;
+
+    @Column(name = "image")
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public Goods() {
     }

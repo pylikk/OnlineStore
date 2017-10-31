@@ -18,6 +18,16 @@
         <div class="orders">
             <a href="/orders">Orders</a>
         </div>
+
+        <c:if test="${pageContext.request.userPrincipal.name != null}">
+            <div class="logout">
+                <form id="logoutForm" method="POST" action="${contextPath}/logout">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+                Welcome ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+            </div>
+        </c:if>
+
     </div>
 
     <div class="main">
@@ -51,29 +61,29 @@
 
             <c:if test="${manuf != null}">
                 <div class="goodsdata">
-                <h3 align="center">${manuf.name}</h3>
-                <table align="center">
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-
-                    <c:forEach items="${listGoods}" var="goods">
+                    <h3 align="center">${manuf.name}</h3>
+                    <table align="center">
                         <tr>
-                            <td>${goods.id}</td>
-                            <td>${goods.name}</td>
-                            <td>${goods.price}</td>
-                            <td>${goods.quantity}</td>
-                            <td><a href="/edit_goods/${goods.id}">edit</a></td>
-                            <td><a href="/remove_goods/${goods.id}">delete</a></td>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
-                    </c:forEach>
-                </table>
-                <br>
+
+                        <c:forEach items="${listGoods}" var="goods">
+                            <tr>
+                                <td>${goods.id}</td>
+                                <td>${goods.name}</td>
+                                <td>${goods.price}</td>
+                                <td>${goods.quantity}</td>
+                                <td><a href="/edit_goods/${goods.id}">edit</a></td>
+                                <td><a href="/remove_goods/${goods.id}">delete</a></td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                    <br>
 
                 </div>
             </c:if>

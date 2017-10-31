@@ -1,40 +1,58 @@
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-
-<!DOCTYPE html>
-<html lang="en">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="from" uri="http://www.springframework.org/tags/form" %>
+<%@ page session="false" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Welcome</title>
-
+    <title>Goods</title>
+    <link href="${contextPath}/resources/main.css" rel="stylesheet"/>
 </head>
 <body>
-
 <div class="container">
+    <div class="header">
+        <div class="goods">
+            <a href="/goods">Goods</a>
+        </div>
+        <div class="orders">
+            <a href="/orders">Orders</a>
+        </div>
 
-    <c:if test="${pageContext.request.userPrincipal.name != null}">
-        <form id="logoutForm" method="POST" action="${contextPath}/logout">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
+        <c:if test="${pageContext.request.userPrincipal.name != null}">
+            <div class="logout">
+                <form id="logoutForm" method="POST" action="${contextPath}/logout">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+                Welcome ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+            </div>
+        </c:if>
 
-        <h2>Welcome ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
-        </h2>
+    </div>
 
-    </c:if>
-
+    <div class="main">
+        <div class="left-menu">
+            <ul>
+                <c:forEach items="${allManufacturers}" var="manufacturer">
+                    <li><a href="/goodsbymanufacturer/${manufacturer.name}" >${manufacturer.name}</a></li>
+                </c:forEach>
+            </ul>
+        </div>
+        <div class="content">
+            <c:if test="${goods != null}">
+                <c:forEach items="${goods}" var="goods">
+                    <div class="goodsdata">
+                        <p>${goods.name}</p>
+                        <img width="100" src="${contextPath}/resources/images/${goods.id}.jpg">
+                        ${goods.price} USD
+                    </div>
+                </c:forEach>
+            </c:if>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; All rights reserved 2017</p>
+    </div>
 </div>
-<h1>Welcome in the Online Store!</h1>
-
-<a href="goods">Goods</a>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
 </body>
 </html>

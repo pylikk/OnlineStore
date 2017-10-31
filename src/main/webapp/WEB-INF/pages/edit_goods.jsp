@@ -21,83 +21,102 @@
     </div>
 
     <div class="content">
-    <form:form action="/goods/add/" method="post" modelAttribute="goods">
-        <table align="center">
-            <tr>
-                <td>
-                    <form:label path="id">
-                        <spring:message text="ID"/>
-                    </form:label>
-                </td>
-                <td>
-                    <form:input path="id" readonly="true" size="8" disabled="true"/>
-                    <form:hidden path="id"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <form:label path="name">
-                        <spring:message text="name"/>
-                    </form:label>
-                </td>
-                <td>
-                    <form:input path="name"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <form:label path="manufacturer">
-                        <spring:message text="manufacturer"/>
-                    </form:label>
-                </td>
-                <td>
-                    <form:select path="manufacturer.id">
-                        <c:forEach items="${allManufacturers}" var="manufacturer">
-                            <option value="${manufacturer.id}">${manufacturer.name}</option>
-                        </c:forEach>
-                    </form:select>
+        <form:form action="/goods/add/" method="post" modelAttribute="goods">
+            <table align="center">
+                <tr>
+                    <td>
+                        <form:label path="id">
+                            <spring:message text="ID"/>
+                        </form:label>
+                    </td>
+                    <td>
+                        <form:input path="id" readonly="true" size="8" disabled="true"/>
+                        <form:hidden path="id"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form:label path="name">
+                            <spring:message text="name"/>
+                        </form:label>
+                    </td>
+                    <td>
+                        <form:input path="name"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form:label path="manufacturer">
+                            <spring:message text="manufacturer"/>
+                        </form:label>
+                    </td>
+                    <td>
+                        <form:select path="manufacturer.id">
+                            <c:forEach items="${allManufacturers}" var="manufacturer">
+                                <option value="${manufacturer.id}">${manufacturer.name}</option>
+                            </c:forEach>
+                        </form:select>
 
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <form:label path="price">
-                        <spring:message text="price"/>
-                    </form:label>
-                </td>
-                <td>
-                    <form:input path="price"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <form:label path="description">
-                        <spring:message text="description"/>
-                    </form:label>
-                </td>
-                <td>
-                    <form:textarea path="description"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <form:label path="quantity">
-                        <spring:message text="quantity"/>
-                    </form:label>
-                </td>
-                <td>
-                    <form:input path="quantity"/>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <input type="submit" class="button" value="Save"/>
-                </td>
-            </tr>
-        </table>
-    </form:form>
-</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form:label path="price">
+                            <spring:message text="price"/>
+                        </form:label>
+                    </td>
+                    <td>
+                        <form:input path="price"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form:label path="description">
+                            <spring:message text="description"/>
+                        </form:label>
+                    </td>
+                    <td>
+                        <form:textarea path="description"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form:label path="quantity">
+                            <spring:message text="quantity"/>
+                        </form:label>
+                    </td>
+                    <td>
+                        <form:input path="quantity"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <input type="submit" class="button" value="Save"/>
+                    </td>
+                </tr>
+            </table>
+        </form:form>
+
+        <form:form enctype="multipart/form-data" modelAttribute="goods" method="post" action="/uploadFile?${_csrf.parameterName}=${_csrf.token}">
+            <table align="center">
+                <tr>
+                    <td>
+                        <form:label path="image">
+                            <spring:message text="image"/>
+                        </form:label>
+                    </td>
+                    <td>
+                        <input type="file" name="file"><br>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <input type="hidden" name="goods_id" value="${goods.id}"/>
+                        <input type="submit" value="Upload">
+                    </td>
+                </tr>
+            </table>
+        </form:form>
+    </div>
     <div class="footer">
         <p>&copy; All rights reserved 2017</p>
     </div>

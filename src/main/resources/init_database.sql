@@ -63,18 +63,8 @@ CREATE TABLE goods(
   description VARCHAR(10000) NOT NULL DEFAULT 'description',
   price INT NOT NULL,
   quantity INT NOT NULL,
+  image VARCHAR(255),
   FOREIGN KEY (manufacturer_id) REFERENCES manufacturers(id)
-
-) ENGINE=InnoDB;
-
-CREATE TABLE goods_images(
-
-  goods_id INT NOT NULL,
-  image_ref VARCHAR(255),
-  image_status ENUM('main','additional','low_size'),
-  FOREIGN KEY (goods_id) REFERENCES goods(id),
-
-  UNIQUE (goods_id,image_ref)
 
 ) ENGINE=InnoDB;
 
