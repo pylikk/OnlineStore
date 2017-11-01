@@ -22,28 +22,8 @@
     </div>
 
     <div class="content">
-        <table align="center">
-            <tr>
-                <th>Id</th>
-                <th>Phone</th>
-                <th>Address</th>
-                <th>Name</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-                <c:forEach items="${allOrders}" var="order">
-                   <tr>
-                       <td>${order.id}</td>
-                       <td>${order.phone}</td>
-                       <td>${order.address}</td>
-                       <td>${order.firstname} ${order.lastname}</td>
-                       <td><a href="/edit_order/${order.id}">edit</a></td>
-                       <td><a href="/remove_order/${order.id}">delete</a></td>
-                   </tr>
-                </c:forEach>
 
-        </table>
-
+        <h3>Thank you for your order # ${order_id}!</h3>
 
     </div>
     <div class="footer">

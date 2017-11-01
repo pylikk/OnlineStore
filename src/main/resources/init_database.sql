@@ -36,14 +36,17 @@ CREATE TABLE user_roles (
 CREATE TABLE orders(
 
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  customer_id INT NOT NULL,
-  order_date DATE,
-  order_time TIME,
+  goods_id INT NOT NULL,
+  firstname VARCHAR(100) NULL,
+  lastname VARCHAR(100) NULL,
+  phone VARCHAR(45) NULL,
+  order_date DATETIME,
   delivery_date DATE,
-  delivery_destination VARCHAR(255),
+  address VARCHAR(255),
   order_status ENUM('new','processed','completed') NOT NULL,
   order_info VARCHAR(255),
-  FOREIGN KEY (customer_id) REFERENCES users(id)
+
+  FOREIGN KEY goods_id REFERENCES goods(id)
 
 ) ENGINE=InnoDB;
 
@@ -65,19 +68,6 @@ CREATE TABLE goods(
   quantity INT NOT NULL,
   image VARCHAR(255),
   FOREIGN KEY (manufacturer_id) REFERENCES manufacturers(id)
-
-) ENGINE=InnoDB;
-
-CREATE TABLE order_goods (
-
-  order_id INT NOT NULL,
-  goods_id INT NOT NULL,
-  amount INT NOT NULL,
-
-  FOREIGN KEY (order_id) REFERENCES orders(id),
-  FOREIGN KEY (goods_id) REFERENCES goods(id),
-
-  UNIQUE (order_id, goods_id)
 
 ) ENGINE=InnoDB;
 

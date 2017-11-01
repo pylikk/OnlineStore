@@ -14,7 +14,7 @@ import ua.com.tkachenko.onlinestore.service.ManufacturerService;
 public class ManufacturerController {
 
     @Autowired
-    ManufacturerService manufacturerService;
+    private ManufacturerService manufacturerService;
 
     @RequestMapping(value = {"/","welcome"}, method = RequestMethod.GET)
     public String welcome (Model model) {

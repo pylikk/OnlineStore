@@ -20,13 +20,10 @@ import java.io.IOException;
 public class GoodsController {
 
     @Autowired
-    ManufacturerService manufacturerService;
+    private ManufacturerService manufacturerService;
 
     @Autowired
-    GoodsService goodsService;
-
-    @Autowired
-    UserService userService;
+    private GoodsService goodsService;
 
     @RequestMapping(value = "/goods", method = RequestMethod.GET)
     public String goods (Model model) {

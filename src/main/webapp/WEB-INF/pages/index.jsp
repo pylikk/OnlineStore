@@ -54,7 +54,7 @@
                             </tr>
                             <tr>
                                 <td>Price: ${goods.price} USD</td>
-                                <td><a href="" class="button">Buy now!</a></td>
+                                <td><a href="/cart?goods_id=${goods.id}" class="button">Buy now!</a></td>
                             </tr>
                         </table>
                     </div>
