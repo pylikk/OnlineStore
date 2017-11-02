@@ -4,35 +4,44 @@
 <%@ taglib prefix="from" uri="http://www.springframework.org/tags/form" %>
 <%@ page session="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <html>
 <head>
-    <title>Goods</title>
+    <title>Edit Goods</title>
     <link href="${contextPath}/resources/main.css" rel="stylesheet"/>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container">
     <div class="header">
-        <div class="goods">
-            <a href="/goods">Goods</a>
-        </div>
-        <div class="orders">
-            <a href="/orders">Orders</a>
-        </div>
-
-        <c:if test="${pageContext.request.userPrincipal.name != null}">
-            <div class="logout">
+        <div class="menufix"><a href="/">Main</a></div>
+        <div class="menufix"><a href="/admin/goods">Goods</a></div>
+        <div class="menufix"><a href="/admin/orders">Orders</a></div>
+        <form class="search" action="/search?${_csrf.parameterName}=${_csrf.token}" method="POST">
+            Search: <input type="text" size="12" name="search" id="search"><input type="submit" class="button" value="Go"></form>
+        <div class="hello">Hello,
+            <c:if test="${pageContext.request.userPrincipal.name != null}">
                 <form id="logoutForm" method="POST" action="${contextPath}/logout">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
-                Welcome ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
-            </div>
-        </c:if>
-
+                ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+            </c:if>
+            <c:if test="${pageContext.request.userPrincipal.name == null}">
+                guest!
+            </c:if>
+        </div>
     </div>
 
     <div class="main">
         <div class="left-menu">
             <h3 align="center">Manufacturers</h3><br>
+            <a href="/admin/edit_manufacturer" class="button">New Manufacturer</a>
+            <h3></h3>
             <c:if test="${!empty allManufacturers}">
                 <table>
                     <tr>
@@ -45,22 +54,24 @@
                     <c:forEach items="${allManufacturers}" var="manufacturer">
                         <tr>
                             <td>${manufacturer.id}</td>
-                            <td><a href="/goods/${manufacturer.name}">${manufacturer.name}</a></td>
+                            <td><a href="/admin/goods/${manufacturer.name}">${manufacturer.name}</a></td>
                             <td>${manufacturer.country}</td>
-                            <td><a href="/edit_manufacturer/${manufacturer.id}">edit</a></td>
-                            <td><a href="/remove_manufacturer/${manufacturer.id}">delete</a></td>
+                            <td><a href="/admin/edit_manufacturer/${manufacturer.id}">edit</a></td>
+                            <td><a href="/admin/remove_manufacturer/${manufacturer.id}">delete</a></td>
                         </tr>
                     </c:forEach>
                 </table>
             </c:if>
             <br>
-            <a href="/edit_manufacturer" class="button">New Manufacturer</a>
+
         </div>
         <div class="content">
-            <h3 align="center">Goods</h3>
+
 
             <c:if test="${manuf != null}">
                 <div class="goodsdata">
+                    <h3 align="center">Goods</h3>
+                    <a href="/admin/edit_goods" class="button">New Goods</a>
                     <h3 align="center">${manuf.name}</h3>
                     <table align="center">
                         <tr>
@@ -78,8 +89,8 @@
                                 <td>${goods.name}</td>
                                 <td>${goods.price}</td>
                                 <td>${goods.quantity}</td>
-                                <td><a href="/edit_goods/${goods.id}">edit</a></td>
-                                <td><a href="/remove_goods/${goods.id}">delete</a></td>
+                                <td><a href="/admin/edit_goods/${goods.id}">edit</a></td>
+                                <td><a href="/admin/remove_goods/${goods.id}">delete</a></td>
                             </tr>
                         </c:forEach>
                     </table>
@@ -87,7 +98,7 @@
 
                 </div>
             </c:if>
-            <a href="/edit_goods" class="button">New Goods</a>
+
         </div>
     </div>
     <div class="footer">

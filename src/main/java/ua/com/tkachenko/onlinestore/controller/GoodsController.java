@@ -9,12 +9,15 @@ import ua.com.tkachenko.onlinestore.model.Goods;
 import ua.com.tkachenko.onlinestore.model.Manufacturer;
 import ua.com.tkachenko.onlinestore.service.GoodsService;
 import ua.com.tkachenko.onlinestore.service.ManufacturerService;
-import ua.com.tkachenko.onlinestore.service.UserService;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class GoodsController {
@@ -25,7 +28,7 @@ public class GoodsController {
     @Autowired
     private GoodsService goodsService;
 
-    @RequestMapping(value = "/goods", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/goods", method = RequestMethod.GET)
     public String goods (Model model) {
         model.addAttribute("allManufacturers",manufacturerService.findAll());
         model.addAttribute("manufacturer", new Manufacturer());
@@ -43,7 +46,7 @@ public class GoodsController {
         return "index";
     }
 
-    @RequestMapping(value = "goods/{manufacturer}", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/goods/{manufacturer}", method = RequestMethod.GET)
     public String manufacturers (@PathVariable("manufacturer") String manufacturer, Model model) {
         model.addAttribute("manuf", manufacturerService.findByName(manufacturer));
         model.addAttribute("listGoods",manufacturerService.findByName(manufacturer).getGoods());
@@ -54,21 +57,46 @@ public class GoodsController {
         return "goods";
     }
 
-    @RequestMapping(value = "goods/add", method = RequestMethod.POST)
-    public String addGoods (@ModelAttribute("goods") Goods goods) {
-        goodsService.save(goods);
+    @RequestMapping(value = "/admin/goods/add", method = RequestMethod.POST)
+    public String addGoods (@ModelAttribute("goods") Goods goods, @RequestParam("file") MultipartFile file, @RequestParam("goods_id") String id) {
 
-        return "redirect:/goods";
+        Goods savedGoods = goodsService.save(goods);
+
+        String url = "file:///D:/java/images/";
+        String fileName = url + savedGoods.getId() + ".jpg";
+        URI uri = null;
+        try {
+            uri = new URI(fileName);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        if (!file.isEmpty()) {
+            if (uri != null) {
+                File uploadedFile = new File(uri);
+                try {
+                    byte[] bytes = file.getBytes();
+                    BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
+                    stream.write(bytes);
+                    stream.flush();
+                    stream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        return "redirect:/admin/goods";
     }
 
-    @RequestMapping(value = "/remove_goods/{id}")
+    @RequestMapping(value = "/admin/remove_goods/{id}")
     public String removeGoods (@PathVariable("id") long id) {
         goodsService.remove(id);
 
-        return "redirect:/goods";
+        return "redirect:/admin/goods";
     }
 
-    @RequestMapping("/edit_goods/{id}")
+    @RequestMapping("/admin/edit_goods/{id}")
     public String editGoods (@PathVariable("id") long id, Model model) {
         model.addAttribute("allManufacturers",manufacturerService.findAll());
         model.addAttribute("goods", goodsService.findGoodsById(id));
@@ -76,32 +104,23 @@ public class GoodsController {
         return "edit_goods";
     }
 
-    @RequestMapping("/edit_goods")
+    @RequestMapping("/admin/edit_goods")
     public String addGoods (Model model) {
         model.addAttribute("goods", new Goods());
-        model.addAttribute("allManufacturers",manufacturerService.findAll());
+        model.addAttribute("allManufacturers", manufacturerService.findAll());
 
         return "edit_goods";
     }
 
-    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-    public String uploadFile (@RequestParam("file") MultipartFile file, @RequestParam("goods_id") String id) {
-        String path = "C:/Users/Ьф/IdeaProjects/OnlineStore/src/main/webapp/resources/images/";
-        String fileName = path + id + ".jpg";
-
-        if (!file.isEmpty()) {
-            File uploadedFile = new File(fileName);
-            try {
-                byte[] bytes = file.getBytes();
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
-                stream.write(bytes);
-                stream.flush();
-                stream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    @RequestMapping(value = "/search")
+    public String search (@RequestParam("search") String search, Model model) {
+        List<Goods> goods = goodsService.search(search);
+        if (goods != null) {
+            model.addAttribute("goods", goods);
         }
-        return "redirect:/goods";
+        model.addAttribute("allManufactures", manufacturerService.findAll());
+        return "index";
     }
+
 
 }

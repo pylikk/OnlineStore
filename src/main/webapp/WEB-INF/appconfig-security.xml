@@ -8,14 +8,12 @@
 		http://www.springframework.org/schema/security/spring-security.xsd">
 
     <http auto-config="true">
-        <!--<intercept-url pattern="/cart" access="hasAnyRole('ROLE_USER','ROLE_MANAGER','ROLE_ADMIN')"/>-->
-        <!--<intercept-url pattern="/admin" access="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')"/>-->
-        <!--<intercept-url pattern="/admin/bb" access="hasAnyRole('ROLE_ADMIN')"/>-->
+        <intercept-url pattern="/admin**" access="hasAnyRole('ROLE_ADMIN')"/>
 
-        <!--<form-login login-page="/login" default-target-url="/index" authentication-failure-url="/login?error"-->
-                    <!--username-parameter="username" password-parameter="password"/>-->
+        <form-login login-page="/login" default-target-url="/index" authentication-failure-url="/login?error"
+                    username-parameter="username" password-parameter="password"/>
 
-        <!--<logout logout-success-url="/login?logout"/>-->
+        <logout logout-success-url="/login?logout"/>
     </http>
     
     <authentication-manager alias="authenticationManager">

@@ -28,8 +28,14 @@ public class Order {
     @Column(name = "order_date")
     private Date date;
 
+    @Column(name = "delivery_date")
+    private Date delivery_date;
+
     @Column(name = "order_info")
     private String order_info;
+
+    @Column(name = "order_status")
+    private String order_status;
 
     @ManyToOne
     @JoinColumn(name = "goods_id")
@@ -37,6 +43,22 @@ public class Order {
 
     public Order() {
         date = new Date();
+    }
+
+    public Date getDelivery_date() {
+        return delivery_date;
+    }
+
+    public void setDelivery_date(Date delivery_date) {
+        this.delivery_date = delivery_date;
+    }
+
+    public String getOrder_status() {
+        return order_status;
+    }
+
+    public void setOrder_status(String order_status) {
+        this.order_status = order_status;
     }
 
     public Goods getGoods() {

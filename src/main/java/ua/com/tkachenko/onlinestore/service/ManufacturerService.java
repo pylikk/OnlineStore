@@ -13,8 +13,8 @@ public class ManufacturerService {
     @Autowired
     private ManufacturerDao manufacturerDao;
 
-    public void save (Manufacturer manufacturer) {
-        manufacturerDao.save(manufacturer);
+    public Manufacturer save (Manufacturer manufacturer) {
+        return manufacturerDao.save(manufacturer);
     }
 
     public Iterable<Manufacturer> findAll () {

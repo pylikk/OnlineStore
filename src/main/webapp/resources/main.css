@@ -20,30 +20,80 @@ input {
 
 
 table {
-    border: 2px solid gray;
+    border: 2px solid PeachPuff;
     padding: 6px;
     border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
 }
+
 th {
-    border: 1px solid CornflowerBlue;
+    border: 1px solid PeachPuff;
     padding: 5px;
 }
 td {
-    border: 1px solid CornflowerBlue;
+    border: 1px solid PeachPuff;
     padding: 5px;
 }
 
 li {
     text-align: left;
-    margin: 5px;
+    list-style: none;
+}
+
+li a {
+    font-style: italic;
+    color: gray;
+    min-width: 150px;
+    padding: 8px 14px;
+    display: block;
+    background-color: PapayaWhip;
+    text-decoration: none;
+    border: 1px solid NavajoWhite;
+}
+
+li a:hover {
+    background-color: PeachPuff;
+
 }
 
 .container {
     background: Seashell;
     text-align: center;
     width: 1024px;
-    margin: 10px auto;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
     border: 2px solid AntiqueWhite;
+}
+
+
+.search {
+    padding-top: 10px;
+    padding-left: 50px;
+    float: left;
+}
+
+
+.hello {
+    padding: 30px;
+    float: right;
+}
+
+.admintable {
+
+    margin: 10px 100px;
+}
+
+.center {
+    margin: 10px auto;
+}
+
+.main-menu a {
+    text-decoration: none;
+    border: 1px solid #e5e5e5;
+    padding: 0;
+    color: #0088cc;
 }
 
 .header {
@@ -54,6 +104,8 @@ li {
 }
 
 .footer {
+    clear: both;
+    padding-top: 20px;
     min-height: 80px;
     width: 100%;
     background: BlanchedAlmond;
@@ -61,27 +113,30 @@ li {
 
 .left-menu {
     float: left;
-    min-height: 600px;
-    margin-left: 20px;
+    min-height: 800px;
+    background-color: Seashell;
 }
+
 .content {
-    min-height: 600px;
+    max-width: 70%;
+    float: left;
+    margin-left: 20px;
+    background-color: Seashell;
 }
-.goods {
+
+.menufix {
     padding: 30px;
     float: left;
 }
-.orders {
-    padding-top: 30px;
-    float: left;
-}
-.goodsdata {
 
+
+.leftmargin {
+    margin-left: 0px;
 }
 
 .button {
-
     display: inline-block;
+    position: center;
     color: white;
     text-decoration: none;
     padding: .5em 2em;
@@ -97,6 +152,9 @@ li {
 .button:active { background: linear-gradient(#f59500, #f5ae00) #f59500; }
 
 .goodsdata{
+    width: 96%;
+    padding-top: 10px;
+    padding-left: 20px;
     text-align: left;
-    margin-left: 250px;
 }
+

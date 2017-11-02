@@ -5,14 +5,16 @@ import org.springframework.stereotype.Service;
 import ua.com.tkachenko.onlinestore.dao.OrderDao;
 import ua.com.tkachenko.onlinestore.model.Order;
 
+import java.util.List;
+
 @Service
 public class OrderService {
 
     @Autowired
     private OrderDao orderDao;
 
-    public void save (Order order) {
-        orderDao.save(order);
+    public Order save (Order order) {
+        return orderDao.save(order);
     }
 
     public Iterable<Order> allOrders () {
@@ -25,5 +27,9 @@ public class OrderService {
 
     public Order findOrderById (long id) {
         return orderDao.findOne(id);
+    }
+
+    public List<String> statusList () {
+        return orderDao.statusList();
     }
 }

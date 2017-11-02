@@ -9,6 +9,9 @@ import ua.com.tkachenko.onlinestore.service.GoodsService;
 import ua.com.tkachenko.onlinestore.service.ManufacturerService;
 import ua.com.tkachenko.onlinestore.service.OrderService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class OrderController {
 
@@ -21,7 +24,7 @@ public class OrderController {
     @Autowired
     private ManufacturerService manufacturerService;
 
-    @RequestMapping("/orders")
+    @RequestMapping("/admin/orders")
     public String orders (Model model) {
         model.addAttribute("allOrders", orderService.allOrders());
 
@@ -49,21 +52,21 @@ public class OrderController {
         return "congratulations";
     }
 
-    @RequestMapping(value = "order/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/order/add", method = RequestMethod.POST)
     public String addOrder (@ModelAttribute("order") Order order) {
         orderService.save(order);
 
         return "redirect:/orders";
     }
 
-    @RequestMapping(value = "/remove_order/{id}")
+    @RequestMapping(value = "/admin/remove_order/{id}")
     public String removeOrder (@PathVariable("id") long id) {
         orderService.remove(id);
 
         return "redirect:/orders";
     }
 
-    @RequestMapping("/edit_order/{id}")
+    @RequestMapping("/admin/edit_order/{id}")
     public String editOrder (@PathVariable("id") long id, Model model) {
         model.addAttribute("allManufacturers",manufacturerService.findAll());
         model.addAttribute("order", orderService.findOrderById(id));
@@ -71,10 +74,15 @@ public class OrderController {
         return "edit_order";
     }
 
-    @RequestMapping("/edit_order")
+    @RequestMapping("/admin/edit_order")
     public String addOrder (Model model) {
         model.addAttribute("order", new Order());
         model.addAttribute("allManufacturers",manufacturerService.findAll());
+        List<String> statusList = new ArrayList<>();
+        statusList.add("new");
+        statusList.add("processed");
+        statusList.add("completed");
+        model.addAttribute("statusList", statusList);
 
         return "edit_order";
     }

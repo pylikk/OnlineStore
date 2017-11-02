@@ -43,10 +43,10 @@ CREATE TABLE orders(
   order_date DATETIME,
   delivery_date DATE,
   address VARCHAR(255),
-  order_status ENUM('new','processed','completed') NOT NULL,
+  order_status VARCHAR(45) NOT NULL DEFAULT 'new',
   order_info VARCHAR(255),
 
-  FOREIGN KEY goods_id REFERENCES goods(id)
+  FOREIGN KEY (goods_id) REFERENCES goods(id)
 
 ) ENGINE=InnoDB;
 
