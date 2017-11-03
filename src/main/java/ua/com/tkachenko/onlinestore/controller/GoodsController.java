@@ -61,18 +61,12 @@ public class GoodsController {
     public String addGoods (@ModelAttribute("goods") Goods goods, @RequestParam("file") MultipartFile file, @RequestParam("goods_id") String id) {
 
         Goods savedGoods = goodsService.save(goods);
+        String fileName = "C:/Users/Ьф/IdeaProjects/OnlineStore/src/main/webapp/resources/images/"+savedGoods.getId()+".jpg";
+        savedGoods.setImage(fileName);
+        goodsService.save(savedGoods);
 
-        String url = "file:///D:/java/images/";
-        String fileName = url + savedGoods.getId() + ".jpg";
-        URI uri = null;
-        try {
-            uri = new URI(fileName);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
         if (!file.isEmpty()) {
-            if (uri != null) {
-                File uploadedFile = new File(uri);
+                File uploadedFile = new File(fileName);
                 try {
                     byte[] bytes = file.getBytes();
                     BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
@@ -82,7 +76,6 @@ public class GoodsController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
         }
 
 

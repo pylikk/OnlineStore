@@ -32,15 +32,12 @@ public class GoodsService {
 
     public List<Goods> startedGoods () {
         List<Goods> startedGoods = new ArrayList<>();
+        startedGoods.add(goodsDao.findOne(6L));
+        startedGoods.add(goodsDao.findOne(14L));
+        startedGoods.add(goodsDao.findOne(27L));
+        startedGoods.add(goodsDao.findOne(8L));
         startedGoods.add(goodsDao.findOne(1L));
-//        startedGoods.add(goodsDao.findOne(2L));
-        startedGoods.add(goodsDao.findOne(3L));
-        startedGoods.add(goodsDao.findOne(4L));
-        startedGoods.add(goodsDao.findOne(5L));
 
-        for (Goods goods : startedGoods) {
-            System.out.println(goods.getName());
-        }
         return startedGoods;
     }
 }

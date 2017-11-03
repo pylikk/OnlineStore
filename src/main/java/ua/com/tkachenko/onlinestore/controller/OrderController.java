@@ -10,6 +10,7 @@ import ua.com.tkachenko.onlinestore.service.ManufacturerService;
 import ua.com.tkachenko.onlinestore.service.OrderService;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -41,6 +42,7 @@ public class OrderController {
 
     @RequestMapping(value = "/makeorder", method = RequestMethod.POST)
     public String makeorder (@ModelAttribute("order") Order order){
+        order.setOrder_status("new");
         orderService.save(order);
 
         return "redirect:/congratulations?order_id=" + order.getId();
@@ -54,16 +56,17 @@ public class OrderController {
 
     @RequestMapping(value = "/admin/order/add", method = RequestMethod.POST)
     public String addOrder (@ModelAttribute("order") Order order) {
+
         orderService.save(order);
 
-        return "redirect:/orders";
+        return "redirect:/admin/orders";
     }
 
     @RequestMapping(value = "/admin/remove_order/{id}")
     public String removeOrder (@PathVariable("id") long id) {
         orderService.remove(id);
 
-        return "redirect:/orders";
+        return "redirect:/admin/orders";
     }
 
     @RequestMapping("/admin/edit_order/{id}")
@@ -74,7 +77,7 @@ public class OrderController {
         return "edit_order";
     }
 
-    @RequestMapping("/admin/edit_order")
+    @RequestMapping("edit_order")
     public String addOrder (Model model) {
         model.addAttribute("order", new Order());
         model.addAttribute("allManufacturers",manufacturerService.findAll());

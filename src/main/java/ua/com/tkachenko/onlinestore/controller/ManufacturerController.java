@@ -32,7 +32,7 @@ public class ManufacturerController {
     @RequestMapping(value = "/admin/manufacturer/add", method = RequestMethod.POST)
     public String addManufacturer (@ModelAttribute("manufacturer") Manufacturer manufacturer) {
         manufacturerService.save(manufacturer);
-        return "redirect:/goods";
+        return "redirect:/admin/goods";
     }
 
     @RequestMapping("/admin/edit_manufacturer/{id}")
@@ -54,6 +54,6 @@ public class ManufacturerController {
         model.addAttribute("manufacturer", new Manufacturer());
         manufacturerService.remove(id);
 
-        return "redirect:/goods";
+        return "redirect:/admin/goods";
     }
 }
