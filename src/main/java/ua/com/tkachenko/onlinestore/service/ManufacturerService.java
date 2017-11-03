@@ -15,32 +15,26 @@ public class ManufacturerService {
 
     public Manufacturer save (Manufacturer manufacturer) {
 
-        System.out.println("save");
         return manufacturerDao.save(manufacturer);
     }
 
     public Iterable<Manufacturer> findAll () {
 
-        System.out.println("findAll");
-
        return manufacturerDao.findAll();
     }
 
     public Manufacturer findByName (String name) {
-        System.out.println("findByName");
 
         return manufacturerDao.findByName(name);
     }
 
     public Manufacturer findById(long id) {
 
-        System.out.println("findByID");
         return manufacturerDao.findOne(id);
     }
 
     public void remove (long id) {
 
-        System.out.println("remove");
         manufacturerDao.delete(id);
     }
 }
