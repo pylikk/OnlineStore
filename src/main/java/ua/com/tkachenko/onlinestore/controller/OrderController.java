@@ -71,7 +71,7 @@ public class OrderController {
 
     @RequestMapping("/admin/edit_order/{id}")
     public String editOrder (@PathVariable("id") long id, Model model) {
-        model.addAttribute("allManufacturers",manufacturerService.findAll());
+        model.addAttribute("allGoods",goodsService.findAll());
         model.addAttribute("order", orderService.findOrderById(id));
 
         return "edit_order";

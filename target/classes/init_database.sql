@@ -52,6 +52,9 @@ CREATE TABLE goods(
   image VARCHAR(255),
   FOREIGN KEY (manufacturer_id) REFERENCES manufacturers(id)
 
+  ON UPDATE CASCADE
+  ON DELETE CASCADE
+
 ) ENGINE=InnoDB;
 
 

@@ -40,4 +40,8 @@ public class GoodsService {
 
         return startedGoods;
     }
+
+    public Iterable<Goods> findAll() {
+        return goodsDao.findAll();
+    }
 }

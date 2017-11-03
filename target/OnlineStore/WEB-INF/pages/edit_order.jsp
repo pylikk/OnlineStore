@@ -120,11 +120,8 @@
                 </td>
                 <td>
                     <form:select path="goods.id">
-                    <c:forEach items="${allManufacturers}" var="manufacturer">
-                        <c:forEach items="${manufacturer.goods}" var="goods">
-
-                            <option <c:if test="${order.goods.id == goods.id}">selected</c:if> value="${goods.id}">${manufacturer.name} ${goods.name}</option>
-                        </c:forEach>
+                    <c:forEach items="${allGoods}" var="goods">
+                            <option <c:if test="${order.goods.id == goods.id}">selected</c:if> value="${goods.id}">${goods.manufacturer.name} ${goods.name}</option>
                     </c:forEach>
                     </form:select>
                 </td>
