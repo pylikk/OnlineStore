@@ -20,14 +20,12 @@ public class ManufacturerController {
     @Autowired
     private ManufacturerService manufacturerService;
 
-    @RequestMapping(value = {"/","welcome"}, method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String welcome (Model model) {
         model.addAttribute("allManufacturers", manufacturerService.findAll());
         model.addAttribute("goods", goodsService.startedGoods());
         return "index";
     }
-
-
 
     @RequestMapping(value = "/admin/manufacturer/add", method = RequestMethod.POST)
     public String addManufacturer (@ModelAttribute("manufacturer") Manufacturer manufacturer) {
@@ -43,7 +41,7 @@ public class ManufacturerController {
     }
 
     @RequestMapping("/admin/edit_manufacturer")
-    public String addManufacturer (Model model) {
+    public String saveManufacturer (Model model) {
         model.addAttribute("manufacturer", new Manufacturer());
 
         return "edit_manufacturer";

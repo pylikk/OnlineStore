@@ -77,8 +77,8 @@ public class OrderController {
         return "edit_order";
     }
 
-    @RequestMapping("edit_order")
-    public String addOrder (Model model) {
+    @RequestMapping("/edit_order")
+    public String saveOrder (Model model) {
         model.addAttribute("order", new Order());
         model.addAttribute("allManufacturers",manufacturerService.findAll());
         List<String> statusList = new ArrayList<>();

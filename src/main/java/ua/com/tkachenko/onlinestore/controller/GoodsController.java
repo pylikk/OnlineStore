@@ -96,7 +96,7 @@ public class GoodsController {
     }
 
     @RequestMapping("/admin/edit_goods")
-    public String addGoods (Model model) {
+    public String saveGoods (Model model) {
         model.addAttribute("goods", new Goods());
         model.addAttribute("allManufacturers", manufacturerService.findAll());
 
@@ -105,11 +105,13 @@ public class GoodsController {
 
     @RequestMapping(value = "/search")
     public String search (@RequestParam("search") String search, Model model) {
+
         List<Goods> goods = goodsService.search(search);
+
         if (goods != null) {
             model.addAttribute("goods", goods);
         }
-        model.addAttribute("allManufactures", manufacturerService.findAll());
+        model.addAttribute("allManufacturers", manufacturerService.findAll());
         return "index";
     }
 

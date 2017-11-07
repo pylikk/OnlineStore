@@ -1,4 +1,4 @@
-package ua.com.tkachenko.controller;
+package ua.com.tkachenko.onlinestore.controller;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +24,10 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -128,11 +131,12 @@ public class GoodsControllerTest {
     }
 
 //    @Test
-//    public void testAddGoods () throws Exception {
+//    public void testSaveGoods () throws Exception {
 //
 //        Goods goods = new Goods();
 //        Goods returnGoods = new Goods();
 //        Manufacturer manufacturer = new Manufacturer();
+//        MockMultipartFile multipartFile = new MockMultipartFile("D:/a/a.txt", "some jpg".getBytes());
 //
 //        returnGoods.setId(1L);
 //        returnGoods.setName("Bright Crystal");
@@ -140,15 +144,89 @@ public class GoodsControllerTest {
 //        returnGoods.setPrice(50);
 //        returnGoods.setDescription("description");
 //        returnGoods.setQuantity(10);
-//        returnGoods.setName("/images/1.jpg");
+//        returnGoods.setImage("/images/1.jpg");
 //
 //        when(goodsService.save(goods)).thenReturn(returnGoods);
 //
-//        mockMvc.perform(post("/admin/goods/add")
+//        mockMvc.perform(fileUpload("/admin/goods/add")
+//                .file(multipartFile)
 //                .param("id", "1")
 //                .param("name", "Bright Crystal"))
 //                .andExpect(status().is3xxRedirection())
 //                .andExpect(view().name("redirect:/admin/goods"));
 //    }
+
+    @Test
+    public void testRemoveGoods () throws Exception{
+
+        Long id = 1L;
+
+        mockMvc.perform(get("/admin/remove_goods/1"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/admin/goods"));
+
+
+    }
+
+    @Test
+    public void testEditGoods () throws Exception {
+
+        Long id = 1L;
+
+        Goods goods = new Goods();
+        List<Manufacturer> allManufacturers = new ArrayList<>();
+        allManufacturers.add(new Manufacturer());
+        allManufacturers.add(new Manufacturer());
+
+        when(goodsService.findGoodsById(id)).thenReturn(goods);
+        when(manufacturerService.findAll()).thenReturn(allManufacturers);
+
+        mockMvc.perform(post("/admin/edit_goods/1"))
+                .andExpect(view().name("edit_goods"))
+                .andExpect(model().attribute("goods", instanceOf(Goods.class)))
+                .andExpect(model().attribute("allManufacturers", hasSize(2)));
+    }
+
+    @Test
+    public void testAddGoods () throws Exception {
+
+        List<Manufacturer> allManufacturers = new ArrayList<>();
+        allManufacturers.add(new Manufacturer());
+        allManufacturers.add(new Manufacturer());
+
+        Goods goods = new Goods();
+
+        when(manufacturerService.findAll()).thenReturn(allManufacturers);
+
+        mockMvc.perform(post("/admin/edit_goods"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("edit_goods"))
+                .andExpect(model().attribute("goods", instanceOf(Goods.class)))
+                .andExpect(model().attribute("allManufacturers", hasSize(2)));
+    }
+
+    @Test
+    public void testSearch () throws Exception {
+
+        String search = "crystal";
+
+        List<Goods> goods = new ArrayList<>();
+        goods.add(new Goods());
+        goods.add(new Goods());
+
+        List<Manufacturer> allManufacturers = new ArrayList<>();
+        allManufacturers.add(new Manufacturer());
+        allManufacturers.add(new Manufacturer());
+
+        when(goodsService.search(search)).thenReturn(goods);
+        when(manufacturerService.findAll()).thenReturn(allManufacturers);
+
+        mockMvc.perform(post("/search")
+            .param("search", search))
+                .andExpect(view().name("index"))
+                .andExpect(model().attribute("goods", hasSize(2)))
+                .andExpect(model().attribute("allManufacturers", hasSize(2)));
+    }
+
 
 }
