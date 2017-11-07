@@ -77,8 +77,6 @@ public class GoodsController {
                     e.printStackTrace();
                 }
         }
-
-
         return "redirect:/admin/goods";
     }
 

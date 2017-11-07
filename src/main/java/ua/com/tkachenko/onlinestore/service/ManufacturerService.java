@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import ua.com.tkachenko.onlinestore.dao.ManufacturerDao;
 import ua.com.tkachenko.onlinestore.model.Manufacturer;
 
-import java.util.List;
-
 @Service
 public class ManufacturerService {
 
