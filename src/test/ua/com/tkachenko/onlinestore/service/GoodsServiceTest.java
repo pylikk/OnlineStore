@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import ua.com.tkachenko.onlinestore.dao.GoodsDao;
 import ua.com.tkachenko.onlinestore.model.Goods;
+import ua.com.tkachenko.onlinestore.model.Manufacturer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,9 +80,14 @@ public class GoodsServiceTest {
     public void testStartedGoods() throws Exception {
 
         List<Goods> goods = new ArrayList<>();
-
-        for (int i = 0; i < 20; i++)
-            goods.add(new Goods());
+        Manufacturer manufacturer = new Manufacturer("Versace","Italy");
+        manufacturer.setId(1L);
+        Goods someGoods;
+        for (long i = 0; i < 20; i++) {
+            someGoods = new Goods("someGoods", manufacturer, "des", 40, 10, "image");
+            someGoods.setId(i);
+            goods.add(someGoods);
+        }
 
         when(goodsDao.findAll()).thenReturn(goods);
 

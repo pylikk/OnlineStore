@@ -1,5 +1,6 @@
 package ua.com.tkachenko.onlinestore.dao;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ua.com.tkachenko.onlinestore.model.Goods;
 import ua.com.tkachenko.onlinestore.model.Manufacturer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -22,48 +24,74 @@ public class GoodsDaoTest {
     @Autowired
     private ManufacturerDao manufacturerDao;
 
-    @Test
-    public void testFindByNameLike () throws Exception {
+    @Before
+    public void init () {
 
-        Manufacturer manufacturer = new Manufacturer();
-        manufacturer.setId(1);
-        manufacturer.setName("Versace");
-        manufacturer.setCountry("Italy");
+        Manufacturer manufacturer = new Manufacturer("manufacturer", "Italy");
+        manufacturer.setId(1L);
         manufacturerDao.save(manufacturer);
 
-        Goods brightCrystal = new Goods();
-        brightCrystal.setId(1);
-        brightCrystal.setName("Bright Crystal");
-        brightCrystal.setQuantity(10);
-        brightCrystal.setDescription("adad");
-        brightCrystal.setPrice(40);
-        brightCrystal.setManufacturer(manufacturer);
-        brightCrystal.setImage("image");
+        Goods brightCrystal= new Goods("Bright Crystal", manufacturer, "des", 40, 10, "image");
+        brightCrystal.setId(1L);
+        Goods crystalNoir = new Goods("Crystal Noir", manufacturer, "des", 40, 10, "image");
+        crystalNoir.setId(2L);
+        Goods chance = new Goods("Chance", manufacturer, "des", 40, 10, "image");
+        chance.setId(3L);
+
         goodsDao.save(brightCrystal);
-
-        Goods crystalNoir = new Goods();
-        crystalNoir.setId(2);
-        crystalNoir.setName("Crystal Noir");
-        crystalNoir.setQuantity(10);
-        crystalNoir.setDescription("adad");
-        crystalNoir.setPrice(40);
-        crystalNoir.setManufacturer(manufacturer);
-        crystalNoir.setImage("image");
         goodsDao.save(crystalNoir);
-
-        Goods chance = new Goods();
-        chance.setId(3);
-        chance.setName("Chance");
-        chance.setQuantity(10);
-        chance.setDescription("adad");
-        chance.setPrice(40);
-        chance.setManufacturer(manufacturer);
-        chance.setImage("image");
         goodsDao.save(chance);
+
+        List<Goods> goods = new ArrayList<>();
+        goods.add(brightCrystal);
+        goods.add(crystalNoir);
+        goods.add(chance);
+
+        manufacturer.setGoods(goods);
+    }
+
+    @Test
+    public void testFindAll () {
+
+        assertEquals(3, ((List<Goods>)goodsDao.findAll()).size());
+    }
+
+    @Test
+    public void testFindOne () {
+
+        Long id = 1L;
+        Goods goods = goodsDao.findOne(id);
+
+        assertEquals("Bright Crystal", goods.getName());
+    }
+
+    @Test
+    public void testSave () {
+
+        Manufacturer manufacturer = manufacturerDao.findOne(1L);
+
+        Goods chloe = new Goods("Chloe", manufacturer, "des", 40, 10, "image");
+        chloe.setId(4L);
+
+        goodsDao.save(chloe);
+        Goods goods = goodsDao.findOne(chloe.getId());
+
+        assertEquals(goods.getName(), chloe.getName());
+    }
+
+    @Test
+    public void testDelete () {
+
+        goodsDao.delete(2L);
+
+        assertNull(goodsDao.findOne(2L));
+    }
+
+    @Test
+    public void testFindByNameLike () throws Exception {
 
         List<Goods> goods = goodsDao.findByNameLike("%Crystal%");
 
         assertEquals(2, goods.size());
     }
-
 }

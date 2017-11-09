@@ -10,12 +10,16 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import ua.com.tkachenko.onlinestore.dao.UserDao;
+import ua.com.tkachenko.onlinestore.model.Role;
 import ua.com.tkachenko.onlinestore.model.User;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.*;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class UserDetailsServiceImplTest {
@@ -24,7 +28,7 @@ public class UserDetailsServiceImplTest {
     private UserDao userDao;
 
     @InjectMocks
-    private UserDetailsService userDetailsService;
+    private UserDetailsServiceImpl userDetailsServiceImpl;
 
     @Before
     public void init () {
@@ -36,13 +40,24 @@ public class UserDetailsServiceImplTest {
 
         String username = "user";
         String password = "password";
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("user"));
+        Set<Role> roles = new HashSet<>();
+        roles.add(new Role("ROLE_USER"));
 
         User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setConfirmPassword(password);
+        user.setRoles(roles);
 
         when(userDao.findByUsername(username)).thenReturn(user);
 
+        UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(username);
+        verify(userDao).findByUsername(username);
+
+        Set<GrantedAuthority> authorities = (Set<GrantedAuthority>) userDetails.getAuthorities();
+        assertEquals(1, authorities.size());
+        assertEquals(true, authorities.contains(new SimpleGrantedAuthority("ROLE_USER")));
+        assertEquals(false, authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")));
     }
 
 }

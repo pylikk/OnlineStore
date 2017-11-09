@@ -42,6 +42,15 @@ public class Goods {
     public Goods() {
     }
 
+    public Goods(String name, Manufacturer manufacturer, String description, int price, int quantity, String image) {
+        this.name = name;
+        this.manufacturer = manufacturer;
+        this.description = description;
+        this.price = price;
+        this.quantity = quantity;
+        this.image = image;
+    }
+
     public long getId() {
         return id;
     }
@@ -88,5 +97,33 @@ public class Goods {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Goods goods = (Goods) o;
+
+        if (id != goods.id) return false;
+        if (price != goods.price) return false;
+        if (quantity != goods.quantity) return false;
+        if (!name.equals(goods.name)) return false;
+        if (!manufacturer.equals(goods.manufacturer)) return false;
+        if (!description.equals(goods.description)) return false;
+        return image.equals(goods.image);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + name.hashCode();
+        result = 31 * result + manufacturer.hashCode();
+        result = 31 * result + description.hashCode();
+        result = 31 * result + price;
+        result = 31 * result + quantity;
+        result = 31 * result + image.hashCode();
+        return result;
     }
 }

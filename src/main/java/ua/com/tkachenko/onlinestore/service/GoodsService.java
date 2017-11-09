@@ -33,6 +33,10 @@ public class GoodsService {
     public List<Goods> startedGoods () {
         List<Goods> goods = (List<Goods>) goodsDao.findAll();
         List<Goods> startedGoods = new ArrayList<>();
+
+        if (goods.size() < 6)
+            return goods;
+
         for (int i = 0; i < 5; ) {
             int random = (int) (Math.random() * goods.size());
             if (!startedGoods.contains(goods.get(random))) {
