@@ -68,17 +68,17 @@ public class Manufacturer {
         Manufacturer that = (Manufacturer) o;
 
         if (id != that.id) return false;
-        if (!name.equals(that.name)) return false;
-        if (!country.equals(that.country)) return false;
-        return goods.equals(that.goods);
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (country != null ? !country.equals(that.country) : that.country != null) return false;
+        return goods != null ? goods.equals(that.goods) : that.goods == null;
     }
 
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + name.hashCode();
-        result = 31 * result + country.hashCode();
-        result = 31 * result + goods.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (country != null ? country.hashCode() : 0);
+        result = 31 * result + (goods != null ? goods.hashCode() : 0);
         return result;
     }
 }

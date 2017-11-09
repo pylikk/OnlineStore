@@ -2,7 +2,6 @@ package ua.com.tkachenko.onlinestore.model;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -43,6 +42,18 @@ public class Order {
 
     public Order() {
         date = new Date();
+    }
+
+    public Order(String phone, String address, String firstname, String lastname, Date delivery_date, String order_info, String order_status, Goods goods) {
+        this.phone = phone;
+        this.address = address;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.delivery_date = delivery_date;
+        this.order_info = order_info;
+        this.order_status = order_status;
+        this.goods = goods;
+        this.date = new Date();
     }
 
     public Date getDelivery_date() {
@@ -123,5 +134,40 @@ public class Order {
 
     public void setOrder_info(String order_info) {
         this.order_info = order_info;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Order order = (Order) o;
+
+        if (id != order.id) return false;
+        if (phone != null ? !phone.equals(order.phone) : order.phone != null) return false;
+        if (address != null ? !address.equals(order.address) : order.address != null) return false;
+        if (firstname != null ? !firstname.equals(order.firstname) : order.firstname != null) return false;
+        if (lastname != null ? !lastname.equals(order.lastname) : order.lastname != null) return false;
+        if (date != null ? !date.equals(order.date) : order.date != null) return false;
+        if (delivery_date != null ? !delivery_date.equals(order.delivery_date) : order.delivery_date != null)
+            return false;
+        if (order_info != null ? !order_info.equals(order.order_info) : order.order_info != null) return false;
+        if (order_status != null ? !order_status.equals(order.order_status) : order.order_status != null) return false;
+        return goods != null ? goods.equals(order.goods) : order.goods == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (phone != null ? phone.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
+        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (delivery_date != null ? delivery_date.hashCode() : 0);
+        result = 31 * result + (order_info != null ? order_info.hashCode() : 0);
+        result = 31 * result + (order_status != null ? order_status.hashCode() : 0);
+        result = 31 * result + (goods != null ? goods.hashCode() : 0);
+        return result;
     }
 }

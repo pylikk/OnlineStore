@@ -62,12 +62,13 @@ public class ManufacturerServiceTest {
     @Test
     public void testFindById() throws Exception {
 
-        Long id = anyLong();
+        Long id = 1L;
         Manufacturer manufacturer = new Manufacturer();
+        manufacturer.setId(id);
 
-        when(manufacturerDao.findOne(id)).thenReturn(manufacturer);
+        when(manufacturerDao.findById(id)).thenReturn(manufacturer);
         assertEquals(manufacturer, manufacturerService.findById(id));
-        verify(manufacturerDao).findOne(id);
+        verify(manufacturerDao).findById(id);
     }
 
     @Test

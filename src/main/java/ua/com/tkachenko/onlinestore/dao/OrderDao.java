@@ -10,6 +10,7 @@ import java.util.List;
 public interface OrderDao extends CrudRepository<Order, Long> {
 
     default List<String> statusList () {
+
         List<String> statusList = new ArrayList<>();
         statusList.add("new");
         statusList.add("processed");

@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 import ua.com.tkachenko.onlinestore.model.Goods;
 import ua.com.tkachenko.onlinestore.model.Manufacturer;
 
@@ -48,6 +49,7 @@ public class GoodsDaoTest {
         goods.add(chance);
 
         manufacturer.setGoods(goods);
+        manufacturerDao.save(manufacturer);
     }
 
     @Test
@@ -66,6 +68,7 @@ public class GoodsDaoTest {
     }
 
     @Test
+    @Transactional
     public void testSave () {
 
         Manufacturer manufacturer = manufacturerDao.findOne(1L);
@@ -80,6 +83,7 @@ public class GoodsDaoTest {
     }
 
     @Test
+    @Transactional
     public void testDelete () {
 
         goodsDao.delete(2L);

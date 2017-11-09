@@ -109,21 +109,21 @@ public class Goods {
         if (id != goods.id) return false;
         if (price != goods.price) return false;
         if (quantity != goods.quantity) return false;
-        if (!name.equals(goods.name)) return false;
-        if (!manufacturer.equals(goods.manufacturer)) return false;
-        if (!description.equals(goods.description)) return false;
-        return image.equals(goods.image);
+        if (name != null ? !name.equals(goods.name) : goods.name != null) return false;
+        if (manufacturer != null ? !manufacturer.equals(goods.manufacturer) : goods.manufacturer != null) return false;
+        if (description != null ? !description.equals(goods.description) : goods.description != null) return false;
+        return image != null ? image.equals(goods.image) : goods.image == null;
     }
 
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + name.hashCode();
-        result = 31 * result + manufacturer.hashCode();
-        result = 31 * result + description.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (manufacturer != null ? manufacturer.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + price;
         result = 31 * result + quantity;
-        result = 31 * result + image.hashCode();
+        result = 31 * result + (image != null ? image.hashCode() : 0);
         return result;
     }
 }
