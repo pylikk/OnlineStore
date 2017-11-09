@@ -20,6 +20,7 @@ import ua.com.tkachenko.onlinestore.service.OrderService;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -99,9 +100,14 @@ public class OrderControllerTest {
         Order order = new Order();
         order.setOrder_status("new");
 
+        orderService.save(order);
+        verify(orderService).save(order);
+
         mockMvc.perform(post("/makeorder"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/congratulations?order_id=1"));
+                .andExpect(status().is3xxRedirection());
+//                .andExpect(view().name("redirect:/congratulations?order_id="));
+
+
     }
 
     @Test
@@ -150,7 +156,6 @@ public class OrderControllerTest {
                 .andExpect(view().name("edit_order"))
                 .andExpect(model().attribute("allGoods", hasSize(2)))
                 .andExpect(model().attribute("order", instanceOf(Order.class)));
-
     }
 
     @Test
@@ -165,14 +170,21 @@ public class OrderControllerTest {
         statusList.add("processed");
         statusList.add("completed");
 
-        when(manufacturerService.findAll()).thenReturn(allManufacturers);
+        List<Goods> allGoods = new ArrayList<>();
+        allGoods.add(new Goods());
+        allGoods.add(new Goods());
 
-        mockMvc.perform(post("/edit_order"))
+        when(manufacturerService.findAll()).thenReturn(allManufacturers);
+        when(goodsService.findAll()).thenReturn(allGoods);
+        when(orderService.statusList()).thenReturn(statusList);
+
+        mockMvc.perform(post("/admin/edit_order"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("edit_order"))
                 .andExpect(model().attribute("order", instanceOf(Order.class)))
                 .andExpect(model().attribute("allManufacturers", hasSize(2)))
-                .andExpect(model().attribute("statusList", hasSize(3)));
+                .andExpect(model().attribute("statusList", hasSize(3)))
+                .andExpect(model().attribute("allGoods", hasSize(2)));
 
     }
 

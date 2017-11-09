@@ -31,13 +31,15 @@ public class GoodsService {
     }
 
     public List<Goods> startedGoods () {
+        List<Goods> goods = (List<Goods>) goodsDao.findAll();
         List<Goods> startedGoods = new ArrayList<>();
-        startedGoods.add(goodsDao.findOne(6L));
-        startedGoods.add(goodsDao.findOne(14L));
-        startedGoods.add(goodsDao.findOne(27L));
-        startedGoods.add(goodsDao.findOne(8L));
-        startedGoods.add(goodsDao.findOne(1L));
-
+        for (int i = 0; i < 5; ) {
+            int random = (int) (Math.random() * goods.size());
+            if (!startedGoods.contains(goods.get(random))) {
+                startedGoods.add(goods.get(random));
+                i++;
+            }
+        }
         return startedGoods;
     }
 

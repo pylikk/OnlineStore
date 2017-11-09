@@ -24,6 +24,8 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -105,7 +107,7 @@ public class GoodsControllerTest {
     @Test
     public void testManufacturers() throws Exception {
 
-        String manuf = "Versace";
+        String manuf = anyString();
 
         List<Goods> listGoods = new ArrayList<>();
         listGoods.add(new Goods());
@@ -159,7 +161,7 @@ public class GoodsControllerTest {
     @Test
     public void testRemoveGoods () throws Exception{
 
-        Long id = 1L;
+        Long id = anyLong();
 
         mockMvc.perform(get("/admin/remove_goods/1"))
                 .andExpect(status().is3xxRedirection())
@@ -171,7 +173,7 @@ public class GoodsControllerTest {
     @Test
     public void testEditGoods () throws Exception {
 
-        Long id = 1L;
+        Long id = anyLong();
 
         Goods goods = new Goods();
         List<Manufacturer> allManufacturers = new ArrayList<>();
@@ -208,7 +210,7 @@ public class GoodsControllerTest {
     @Test
     public void testSearch () throws Exception {
 
-        String search = "crystal";
+        String search = anyString();
 
         List<Goods> goods = new ArrayList<>();
         goods.add(new Goods());

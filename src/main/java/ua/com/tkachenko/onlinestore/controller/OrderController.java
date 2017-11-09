@@ -77,15 +77,12 @@ public class OrderController {
         return "edit_order";
     }
 
-    @RequestMapping("/edit_order")
+    @RequestMapping("/admin/edit_order")
     public String saveOrder (Model model) {
         model.addAttribute("order", new Order());
         model.addAttribute("allManufacturers",manufacturerService.findAll());
-        List<String> statusList = new ArrayList<>();
-        statusList.add("new");
-        statusList.add("processed");
-        statusList.add("completed");
-        model.addAttribute("statusList", statusList);
+        model.addAttribute("statusList", orderService.statusList());
+        model.addAttribute("allGoods",goodsService.findAll());
 
         return "edit_order";
     }

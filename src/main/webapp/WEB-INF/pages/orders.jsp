@@ -38,7 +38,7 @@
     </div>
 
     <div class="center">
-        <a href="/edit_order" class="button">New Order</a>
+        <a href="/admin/edit_order" class="button">New Order</a>
         <table align="center">
             <tr>
                 <th>Id</th>
