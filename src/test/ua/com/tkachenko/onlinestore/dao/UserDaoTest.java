@@ -30,7 +30,7 @@ public class UserDaoTest {
         Role role = new Role();
         role.setName("ROLE_TEST");
         role.setId(1L);
-        roleDao.save(role);
+        role = roleDao.save(role);
 
         Set<Role> roles = new HashSet<>();
         roles.add(role);
