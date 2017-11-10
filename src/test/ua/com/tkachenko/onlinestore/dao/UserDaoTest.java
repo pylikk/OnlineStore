@@ -46,13 +46,6 @@ public class UserDaoTest {
     }
 
     @Test
-    public void testFindByUsername() throws Exception {
-
-        User user = userDao.findByUsername("user");
-        assertEquals("password", user.getPassword());
-    }
-
-    @Test
     @Transactional
     public void testSave () {
 
@@ -74,6 +67,10 @@ public class UserDaoTest {
         assertEquals("password2", userDao.findOne(2L).getPassword());
     }
 
+    @Test
+    public void testFindByUsername() throws Exception {
 
-
+        User user = userDao.findByUsername("user");
+        assertEquals("password", user.getPassword());
+    }
 }

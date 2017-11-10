@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -26,9 +27,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -132,48 +131,20 @@ public class GoodsControllerTest {
                 .andExpect(model().attribute("goods", instanceOf(Goods.class)));
     }
 
-//    @Test
-//    public void testSaveGoods () throws Exception {
-//
-//        Goods goods = new Goods();
-//        Goods returnGoods = new Goods();
-//        Manufacturer manufacturer = new Manufacturer();
-//        MockMultipartFile multipartFile = new MockMultipartFile("D:/a/a.txt", "some jpg".getBytes());
-//
-//        returnGoods.setId(1L);
-//        returnGoods.setName("Bright Crystal");
-//        returnGoods.setManufacturer(manufacturer);
-//        returnGoods.setPrice(50);
-//        returnGoods.setDescription("description");
-//        returnGoods.setQuantity(10);
-//        returnGoods.setImage("/images/1.jpg");
-//
-//        when(goodsService.save(goods)).thenReturn(returnGoods);
-//
-//        mockMvc.perform(fileUpload("/admin/goods/add")
-//                .file(multipartFile)
-//                .param("id", "1")
-//                .param("name", "Bright Crystal"))
-//                .andExpect(status().is3xxRedirection())
-//                .andExpect(view().name("redirect:/admin/goods"));
-//    }
-
     @Test
     public void testRemoveGoods () throws Exception{
 
-        Long id = anyLong();
+        Long id = 1L;
 
         mockMvc.perform(get("/admin/remove_goods/1"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/admin/goods"));
-
-
     }
 
     @Test
     public void testEditGoods () throws Exception {
 
-        Long id = anyLong();
+        Long id = 1L;
 
         Goods goods = new Goods();
         List<Manufacturer> allManufacturers = new ArrayList<>();
@@ -191,6 +162,20 @@ public class GoodsControllerTest {
 
     @Test
     public void testAddGoods () throws Exception {
+
+        Goods goods = new Goods();
+        MockMultipartFile file = new MockMultipartFile("file", "file", "type", "content".getBytes());
+
+        mockMvc.perform(MockMvcRequestBuilders.fileUpload("/admin/goods/add")
+            .file(file))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/admin/goods"));
+
+        verify(goodsService).save(goods, file);
+    }
+
+    @Test
+    public void testSaveGoods () throws Exception{
 
         List<Manufacturer> allManufacturers = new ArrayList<>();
         allManufacturers.add(new Manufacturer());

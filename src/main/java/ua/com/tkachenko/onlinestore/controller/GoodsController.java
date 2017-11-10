@@ -58,26 +58,19 @@ public class GoodsController {
     }
 
     @RequestMapping(value = "/admin/goods/add", method = RequestMethod.POST)
-    public String addGoods (@ModelAttribute("goods") Goods goods, @RequestParam("file") MultipartFile file, @RequestParam("goods_id") String id) {
+    public String addGoods (@ModelAttribute("goods") Goods goods, @RequestParam("file") MultipartFile file) {
 
-        Goods savedGoods = goodsService.save(goods);
-        String fileName = "C:/Users/Ьф/IdeaProjects/OnlineStore/src/main/webapp/resources/images/"+savedGoods.getId()+".jpg";
-        savedGoods.setImage(fileName);
-        goodsService.save(savedGoods);
+        goodsService.save(goods, file);
 
-        if (!file.isEmpty()) {
-                File uploadedFile = new File(fileName);
-                try {
-                    byte[] bytes = file.getBytes();
-                    BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
-                    stream.write(bytes);
-                    stream.flush();
-                    stream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-        }
         return "redirect:/admin/goods";
+    }
+
+    @RequestMapping("/admin/edit_goods")
+    public String saveGoods (Model model) {
+        model.addAttribute("goods", new Goods());
+        model.addAttribute("allManufacturers", manufacturerService.findAll());
+
+        return "edit_goods";
     }
 
     @RequestMapping(value = "/admin/remove_goods/{id}")
@@ -91,14 +84,6 @@ public class GoodsController {
     public String editGoods (@PathVariable("id") long id, Model model) {
         model.addAttribute("allManufacturers",manufacturerService.findAll());
         model.addAttribute("goods", goodsService.findGoodsById(id));
-
-        return "edit_goods";
-    }
-
-    @RequestMapping("/admin/edit_goods")
-    public String saveGoods (Model model) {
-        model.addAttribute("goods", new Goods());
-        model.addAttribute("allManufacturers", manufacturerService.findAll());
 
         return "edit_goods";
     }
