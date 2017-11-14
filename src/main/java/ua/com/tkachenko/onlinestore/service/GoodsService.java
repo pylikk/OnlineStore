@@ -30,21 +30,21 @@ public class GoodsService {
         }
 
         Goods savedGoods = goodsDao.save(goods);
-
-        String fileName = "C:/Users/Ьф/IdeaProjects/OnlineStore/src/main/webapp/resources/images/" + savedGoods.getId() + ".jpg";
-
-        savedGoods.setImage(fileName);
-
-        File uploadedFile = new File(fileName);
-        try {
-            byte[] bytes = image.getBytes();
-            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
-            stream.write(bytes);
-            stream.flush();
-            stream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//
+//        String fileName = "C:/Users/Ьф/IdeaProjects/OnlineStore/src/main/webapp/resources/images/" + savedGoods.getId() + ".jpg";
+//
+//        savedGoods.setImage(fileName);
+//
+//        File uploadedFile = new File(fileName);
+//        try {
+//            byte[] bytes = image.getBytes();
+//            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
+//            stream.write(bytes);
+//            stream.flush();
+//            stream.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         return goodsDao.save(savedGoods);
     }
